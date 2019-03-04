@@ -3,20 +3,15 @@ const router = express.Router();
 const passport=require('passport');
 const postController=require('../../controller/postController');
 
-// @route   GET api/posts/test
-// @desc    Tests post route
 // @access  Public
-router.get('/test', (req, res) => res.json({ msg: 'Posts Works' }));
+router.get('/',postController.fetch);
 
-// @route   POST api/posts/create
-// @desc    create post route
 // @access  Private
 router.post('/create',passport.authenticate('jwt',{session:false}),postController.create);
-
-// @route   PUT api/posts/update/:id
-// @desc    update post route
 // @access  Private
 router.put('/update/:id',passport.authenticate('jwt',{session:false}),postController.update);
+// @access  Private
+router.delete('/delete/:id',passport.authenticate('jwt',{session:false}),postController.del);
 
 
 

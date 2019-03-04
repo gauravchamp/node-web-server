@@ -39,5 +39,28 @@ const update=async(req,res)=>{
     }
 };
 
+const fetch=async(req,res)=>{
+    try{
+        const posts=await Post.find();
+        res.json(posts);
+    }
+    catch(err){
+        console.log(err)
+    }
+};
+
+const del=async(req,res)=>{
+    try{
+        const postId=req.params.id;
+        const post=await Post.findByIdAndRemove(postId);
+        res.json({message:'delete success'},post);
+    }
+    catch(err){
+        console.log(err)
+    }
+};
+
 module.exports.create=create;
 module.exports.update=update;
+module.exports.fetch=fetch;
+module.exports.del=del;
