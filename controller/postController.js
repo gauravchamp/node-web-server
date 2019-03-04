@@ -41,8 +41,7 @@ const update=async(req,res)=>{
 const fetch=async(req,res)=>{
     try{
         const posts=await Post.find()
-        .populate('user')
-        .select('name user')
+        .populate('user','name -_id')
         res.json(posts);
     }
     catch(err){
