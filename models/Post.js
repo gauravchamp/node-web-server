@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
    user:{
-       type:Schema.Types.ObjectId,
+       type:mongoose.Schema.Types.ObjectId,
        ref:'users'
    },
    title:{
@@ -16,6 +16,9 @@ const PostSchema = new Schema({
    slug:{
        type:String,
        required:true
+   },
+   image:{
+       type:String
    }
 });
 

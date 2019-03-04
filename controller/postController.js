@@ -3,19 +3,18 @@ const Post=require('../models/Post');
 const create=async(req,res)=>{
     try{
         const user=await Post.findOne({user:req.user.id});
-        if(!user){
-            // create
-            const userId=req.user.id;
-            const {title,body,slug}=req.body;
-            const newPost=new Post({
-                user:userId,
-                title,
-                body,
-                slug
-            });
-            const post=await newPost.save();
-            res.json(post);
-        }
+        // create
+        const userId=req.user.id;
+        const {title,body,slug}=req.body;
+        const newPost=new Post({
+            user:userId,
+            title,
+            body,
+            slug
+        });
+        const post=await newPost.save();
+        res.json(post);
+        
     }
     catch(err){
         console.log(err);
@@ -41,7 +40,9 @@ const update=async(req,res)=>{
 
 const fetch=async(req,res)=>{
     try{
-        const posts=await Post.find();
+        const posts=await Post.find()
+        .populate('user')
+        .select('name user')
         res.json(posts);
     }
     catch(err){
