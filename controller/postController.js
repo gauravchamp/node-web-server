@@ -2,7 +2,7 @@ const Post=require('../models/Post');
 
 const create=async(req,res)=>{
     try{
-        const user=await Post.findById({_id:req.user.id});
+        const user=await Post.findOne({user:req.user.id});
         if(!user){
             // create
             const userId=req.user.id;
@@ -16,13 +16,28 @@ const create=async(req,res)=>{
             const post=await newPost.save();
             res.json(post);
         }
-        else{
-            // update
-        }
     }
     catch(err){
         console.log(err);
     }
 }
 
+const update=async(req,res)=>{
+    try{
+        const user=await Post.findOne({user:req.user.id});
+        if(user){
+            const postId=req.params.id;
+            const postBody={title,body,slug}=req.body;
+            const post=await Post.findByIdAndUpdate(postId,
+                {$set:postBody}
+            );
+            res.json(post);
+        }
+    }
+    catch(err){
+        console.log(err);
+    }
+};
+
 module.exports.create=create;
+module.exports.update=update;
